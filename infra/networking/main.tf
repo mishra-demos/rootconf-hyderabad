@@ -20,4 +20,3 @@ module "vpc" {
     Environment = "production"
   }
 }
-
