@@ -3,7 +3,7 @@
 provider "google" {
   region      = var.region
   project     = var.project
-  credentials = var.credentials
+  credentials = "${file(var.credentials_file_path)}"
 }
 
 resource "random_id" "suffix" {
@@ -25,12 +25,22 @@ resource "google_container_cluster" "cluster" {
   node_version       = "${data.google_container_engine_versions.versions.latest_node_version}"
 }
 
-resource "google_compute_address" "address" {
+resource "google_compute_address" "atlantis" {
   name    = "atlantis-load-balancer"
   region  = var.region
   project = var.project
 }
 
-output "address" {
-  value = "${google_compute_address.address.address}"
+resource "google_compute_address" "buycoffee-inventory" {
+  name    = "buycoffee-inventory-load-balancer"
+  region  = var.region
+  project = var.project
+}
+
+output "atlantis_ip_address" {
+  value = "${google_compute_address.atlantis.address}"
+}
+
+output "buycoffee_inventory_url" {
+  value = "http://${google_compute_address.buycoffee-inventory.address}"
 }
