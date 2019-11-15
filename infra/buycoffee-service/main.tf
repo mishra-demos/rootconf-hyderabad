@@ -17,7 +17,7 @@ module "buycoffee-web-server" {
   service_name     = "buycoffee"
   vpc_id           = data.terraform_remote_state.vpc.outputs.vpc_id
   subnet_id        = element(data.terraform_remote_state.vpc.outputs.public_subnets, 0)
-  web_server_count = 5
+  web_server_count = 3
 
   # Inventory service inventory_service_addr
   inventory_service_addr = "34.93.187.110"
